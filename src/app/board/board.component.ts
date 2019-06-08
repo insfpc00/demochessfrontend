@@ -110,6 +110,7 @@ export class BoardComponent implements OnInit, OnDestroy, AfterViewInit, CanComp
     if (this.chessBoard.whitesPanel && this.chessBoard.blacksPanel &&
       this.chessBoard.whitesPanel.clock && this.chessBoard.blacksPanel.clock) {
       this.notifyReady();
+      this.setTurn(true);
       this.board.turnChange.subscribe(t => this.setTurn(t));
     } else {
       setTimeout(() => {

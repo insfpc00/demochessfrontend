@@ -3,7 +3,7 @@
   "name": "DEV"
    },
    "apiServer": {
-    "baseUrl": "http://192.168.1.4:8080",
-    "socketURL":"ws://192.168.1.4:8080/websocket/websocket"
+    "baseUrl": "http://192.168.1.8:8080",
+    "socketURL":"ws://192.168.1.8:8080/websocket/websocket"
   }
 }

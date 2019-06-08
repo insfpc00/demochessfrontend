@@ -10,10 +10,10 @@ export const myRxStompConfig: InjectableRxStompConfig = {
   },
 
   heartbeatIncoming: 0,
-  heartbeatOutgoing: 20000,
+  heartbeatOutgoing: 10000,
 
-  //reconnectDelay: 2000,
-  reconnectDelay: 0,
+  reconnectDelay: 2000,
+  //reconnectDelay: 0,
 
   debug: (msg: string): void => {
     console.log(new Date(), msg);

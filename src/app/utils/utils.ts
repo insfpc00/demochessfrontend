@@ -30,7 +30,6 @@ export const hashCode = str => {
     hash = str.charCodeAt(i) + ((hash << 5) - hash);
   }
 
-  console.log(str + '=>' + hash);
   return hash;
 }
 

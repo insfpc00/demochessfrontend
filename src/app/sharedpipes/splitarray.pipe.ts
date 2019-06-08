@@ -9,7 +9,6 @@ export class SplitarrayPipe implements PipeTransform {
     const result = new Array(rows).fill([]);
 
     result.forEach((_, i) => result[i] = arr.filter((__, j) => j % rows === i));
-    console.log(result);
     return result;
 
   }

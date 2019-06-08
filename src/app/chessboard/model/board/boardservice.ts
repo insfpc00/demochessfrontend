@@ -289,7 +289,6 @@ export class BoardService {
     }
 
     const moveResult = piece.canBeMovedTo(piece.getPosition());
-    console.log(2);
 
     let promotedType;
 
@@ -316,7 +315,6 @@ export class BoardService {
 
       if (move) {
         const matchResult = this.matchStateAfterMove();
-        console.log(1);
         this.updateMarkers();
         if (!move.promotedTo){
           this._lastPromotedPiece = null; }
@@ -486,9 +484,6 @@ export class BoardService {
     this.whiteKing = this.flattenPieces.find(p => p.isWhite && p instanceof King) as King;
     this.blackKing = this.flattenPieces.find(p => !p.isWhite && p instanceof King) as King;
 
-    console.log(firstToMove);
-    console.log(whiteToMove);
-    console.log(this.iamWhitePieces);
     this.setTurn(whiteToMove);
 
   }

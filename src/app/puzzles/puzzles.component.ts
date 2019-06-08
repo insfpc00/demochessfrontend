@@ -59,9 +59,6 @@ export class PuzzlesComponent implements OnInit {
         for (const partialKey of keys) {
           term = term[partialKey];
         }
-        //console.log(this.filters[key]);
-        //console.log(term.toString());
-        //console.log(term.toString().includes(this.filters[key]));
         return term.toString().includes(this.filters[key])
       });
     }

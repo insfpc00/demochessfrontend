@@ -34,7 +34,6 @@ export class SignupComponent implements OnInit {
     this.userService.signUp(this.userData, this.avatarfile).subscribe(
       data =>  this.router.navigate(['home']) ,
       (error: HttpErrorResponse) => {
-        console.log(error);
         if (error.status === 409) { this.userAlreadyExists = true; } else { this.signUpError = true; }
       });
 

@@ -104,8 +104,6 @@ export class King extends Piece {
             deltaY += stepY;
             const pieces = this.getAllPieces().filter(p => p !== null && p.isWhite === this.isWhite);
             while (deltaX  !== 0 || deltaY !== 0) {
-              console.log(deltaX);
-              console.log(deltaY);
               if (pieces.some(p => p.canBeMovedTo({x: this.getPosition().x + deltaX, y : this.getPosition().y + deltaY}).isValid)) {
                 return false;
               }
