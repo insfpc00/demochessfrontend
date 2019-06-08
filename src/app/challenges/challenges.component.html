@@ -1,0 +1,144 @@
+<div class="container mt-4"></div>
+<form (ngSubmit)="createChallenge()" #createChallengeForm="ngForm">
+  <legend>Create a new challenge</legend>
+  <div class="form-row  align-items-center">
+    <div class="col-3">
+
+      <div class="form-group">
+        <label for="Color">Color:</label>
+        <select [(ngModel)]="challenge.color" id="color" name="color" class="form-control" required>
+          <option value="WHITE">White</option>
+          <option value="BLACK">Black</option>
+          <option value="RANDOM">Random</option>
+        </select>
+      </div>
+    </div>
+    <div class="col-3">
+
+      <div class="form-group">
+        <label for="Time">Time:</label>
+
+        <select [(ngModel)]="challenge.timeInSeconds" id="time" name="time" class="form-control" required>
+          <option value="60">1 min</option>
+          <option value="180">3 min</option>
+          <option value="300">5 min</option>
+          <option value="600">10 min</option>
+        </select>
+      </div>
+    </div>
+    <div class="col-3">
+      <div class="form-group">
+        <label for="timeIncrement">Time increment:</label>
+
+        <select [(ngModel)]="challenge.timeIncrementInSeconds" id="timeIncrement" name="timeIncrement"
+          class="form-control" required>
+          <option value="0">0 seconds</option>
+          <option value="1">1 second</option>
+          <option value="2">2 seconds</option>
+          <option value="3">3 seconds</option>
+          <option value="5">5 seconds</option>
+          <option value="10">10 seconds</option>
+        </select>
+      </div>
+    </div>
+    <div class="col-3 mt-3">
+      <button type="submit" class="btn btn-primary" [disabled]="!createChallengeForm.form.valid">
+        Create
+      </button>
+    </div>
+  </div>
+</form>
+
+<div class="d-flex">
+  <div class="btn btn-light p-2 flex-fill text-center border" (click)="createDefaultChallenge(60,1)">1 + 1</div>
+  <div class="btn btn-light p-2 flex-fill text-center border" (click)="createDefaultChallenge(180,2)">3 + 2</div>
+  <div class="btn btn-light p-2 flex-fill text-center border" (click)="createDefaultChallenge(300,0)">5 + 0</div>
+  <div class="btn btn-light p-2 flex-fill text-center border" (click)="createDefaultChallenge(600,0)">10 + 0</div>
+</div>
+<div class="d-flex flex-row-reverse mt-2" [class.invisible]="!this.hasChallengesPending">
+    <button class="btn btn-light" (click)="onClearAll()"><span class="oi oi-x text-danger"></span> Clear challenges</button>
+    <span class='alert alert-success m-0 mr-auto d-flex align-items-center'>
+        <span class="spinner-border text-primary">
+        </span>
+        &nbsp;&nbsp;Waiting for other users to join!
+    </span>
+</div>
+<div class="mt-2">
+  <legend> ... or join to an existing one</legend>
+</div>
+<app-challengeschart [challenges]="challenges" [username]="userService.loggedUser" (challengeClickedEvent)="challengeClicked($event)"></app-challengeschart>
+<button type="button" class="btn btn-sm btn-link " (click)="filtersCollapsed = !filtersCollapsed">
+    {{filtersCollapsed?'Show filters':'Hide filters'}}
+  </button>
+<div [ngbCollapse]="filtersCollapsed">
+<form class="">
+  <div class="row ">
+    <div class="col-3">
+      <input type="text" searchable="userName" (search)="onFilter($event)" class="form-control" placeholder= "username" name="userName" />
+    </div>
+    <div class="col-3">
+      <select id="color" name="color" searchable="color" (search)="onFilter($event)" class="form-control">
+        <option value="">Select color</option>
+        <option value="WHITE">White</option>
+        <option value="BLACK">Black</option>
+        <option value="RANDOM">Random</option>
+      </select>
+    </div>
+    <div class="col-3">
+      <select class="form-control" searchable="timeInSeconds" (search)="onFilter($event)">
+        <option value="">Select duration</option>
+        <option value="60">1 min</option>
+        <option value="180">3 min</option>
+        <option value="300">5 min</option>
+        <option value="600">10 min</option>
+      </select>
+    </div>
+    <div class="col-3">
+      <select class="form-control" searchable="timeIncrementInSeconds" (search)="onFilter($event)">
+        <option value="">Select increment</option>
+        <option value="0">0 s</option>
+        <option value="1">1 s</option>
+        <option value="2">2 s</option>
+        <option value="3">3 s</option>
+        <option value="5">5 s</option>
+        <option value="10">10 s</option>
+      </select>
+    </div>
+  <!--   <div class="col-2">
+      <select class="form-control">
+        <option value="bullet">bullet</option>
+        <option value="blitz">blitz</option>
+        <option value="rapid">rapid</option>
+      </select>
+    </div> -->
+  </div>
+</form>
+</div>
+<table class="table table-dark table-striped table-hover mt-1">
+  <caption>Available challenges</caption>
+  <thead class="thead-dark">
+    <th class="text-center" scope="col" sortable="userName" (sort)="onSort($event)">User</th>
+    <th class="text-center" scope="col" sortable="color" (sort)="onSort($event)">Color</th>
+    <th class="text-center">Time control</th>
+    <th class="text-center">Type</th>
+  </thead>
+  <tbody>
+    <tr *ngFor="let challenge of pagedChallenges" [class.text-info]="challenge.userName === this.userService.loggedUser"
+      [class.selectable-row]="challenge.userName !== this.userService.loggedUser" (click)="onSelect(challenge)">
+      <td class="text-center">{{challenge.userName}} ({{challenge.eloRating | number:'1.0-0'}}) </td>
+      <td class="text-center"><span [innerHTML]="challenge.color.toLowerCase() | matchColor" [ngbTooltip]="challenge.color.toLowerCase()"></span></td>
+      <td class="text-center">{{challenge | timeControl}}</td>
+      <td class="text-center"><icon-wrapper [name]="challenge | timeControlType"></icon-wrapper></td>
+    </tr>
+  </tbody>
+</table>
+<div class="d-flex justify-content-between p-2">
+  <ngb-pagination [collectionSize]="challenges.length" [(page)]="page" [pageSize]="pageSize">
+  </ngb-pagination>
+
+  <select class="custom-select" style="width: auto" [(ngModel)]="pageSize">
+    <option [ngValue]="5">5 items per page</option>
+    <option [ngValue]="10">10 items per page</option>
+    <option [ngValue]="50">50 items per page</option>
+  </select>
+</div>

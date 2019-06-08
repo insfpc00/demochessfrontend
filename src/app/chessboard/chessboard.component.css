@@ -1,0 +1,140 @@
+#board {
+  /* background: url("../../assets/images/board.svg#svgView(viewBox(0, 0.00,8.1, 8.1))"); */
+  background: url("../../assets/images/board.svg");
+  background-repeat: no-repeat;
+  background-size: contain; /*contain*/
+  /*height: 0;*/
+  /*width: 100%;*/
+  margin:  0;
+  position: relative;
+  z-index:0;
+  -webkit-box-sizing:content-box;
+  box-sizing:content-box;
+  border: medium outset lightblue;
+  /*padding:0;*/
+  /*padding-top: 100%;*/
+}
+.draggable {
+  cursor: pointer;
+  user-select: none;
+}
+
+img {
+  max-width: 100%;
+  max-height: 100%;
+}
+.being-dragged {
+  z-index: 100 !important;
+}
+.piece {
+  background-size: 100% 100% !important;
+  background-repeat: no-repeat !important;
+  height: 12.5%;
+  width: 12.5%;
+  display: inline-block;
+  position: absolute;
+  z-index:10;
+}
+
+.piece-small {
+  background-size: 100% 100% !important;
+  background-repeat: no-repeat !important;
+  height: 1.5em;
+  width: 1.5em;
+}
+
+.unselectable{
+-webkit-user-select: none;
+-moz-user-select: none;
+-ms-user-select: none;
+user-select: none;
+}
+
+.white-king {
+  background: url("../../assets/images/pieces/white_king.svg");
+}
+
+.white-queen {
+  background: url("../../assets/images/pieces/white_queen.svg");
+}
+
+.white-bishop {
+  background: url("../../assets/images/pieces/white_bishop.svg");
+}
+
+.white-horse {
+  background: url("../../assets/images/pieces/white_horse.svg");
+}
+
+.white-rook {
+  background: url("../../assets/images/pieces/white_rook.svg");
+}
+
+.white-pawn {
+  background: url("../../assets/images/pieces/white_pawn.svg");
+}
+
+.black-king {
+  background: url("../../assets/images/pieces/black_king.svg");
+}
+
+.black-queen {
+  background: url("../../assets/images/pieces/black_queen.svg");
+}
+
+.black-bishop {
+  background: url("../../assets/images/pieces/black_bishop.svg");
+}
+
+.black-rook {
+  background: url("../../assets/images/pieces/black_rook.svg");
+}
+
+.black-horse {
+  background: url("../../assets/images/pieces/black_horse.svg");
+}
+
+.black-pawn {
+  background: url("../../assets/images/pieces/black_pawn.svg");
+}
+
+.circle-marker {
+  background: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='100' height='100'><circle cx='50' cy='50' r='10' fill='rgba(200, 255, 0, .7)'/></svg>");
+  background-size: 100% 100% !important;
+  background-repeat: no-repeat !important;
+  height: 12.5%;
+  width: 12.5%;
+  display: inline-block;
+  position: absolute;
+  z-index: 15;
+}
+
+.square-marker-from {
+  height: 12.5%;
+  width: 12.5%;
+  display: inline-block;
+  position: absolute;
+  border: 2px;
+  border-style: solid;
+  border-color: palegreen;
+  border-radius: 3px;
+  z-index:5;
+  box-sizing:border-box;
+
+
+  /* background-image: radial-gradient(circle, rgba(0, 0, 0, 0) 70%, rgba(90, 66, 0, 0.6)); */
+}
+
+.square-marker-to {
+  height: 12.5%;
+  width: 12.5%;
+  display: inline-block;
+  position: absolute;
+  border: 3px;
+  border-style: solid;
+  border-color: greenyellow;
+  border-radius: 3px;
+  z-index:5;
+  box-sizing:border-box;
+  /* background-image: radial-gradient(rgba(0, 0, 0, 0) 70%, rgba(85, 79, 0, 0.6)); */
+}

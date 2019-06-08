@@ -1,0 +1,42 @@
+/* You can add global styles to this file, and also import other style files */
+@import '../node_modules/@angular/material/prebuilt-themes/indigo-pink.css';
+/*@import '~bootstrap/dist/css/bootstrap.css';*/
+/*@import './assets/css/darkly.min.css';*/
+@import "@icon/open-iconic/open-iconic.css";
+
+.promotion-dialog .mat-dialog-container {
+  background:rgba(255, 255, 255, .7);
+}
+.shadowed-light{
+  text-shadow: 1px 0 0 #fff, -1px 0 0 #fff, 0 1px 0 #fff, 0 -1px 0 #fff, 1px 1px #fff, -1px -1px 0 #fff, 1px -1px 0 #fff, -1px 1px 0 #fff;
+}
+
+.shadowed-dark{
+  text-shadow: 1px 0 0 #000, -1px 0 0 #000, 0 1px 0 #000, 0 -1px 0 #000, 1px 1px #000, -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000;
+}
+
+/* .time-control-icon  {
+  height:32px;
+  width:32px;
+} */
+
+th[sortable] {
+  cursor: pointer;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.selectable-row{
+  cursor: pointer;
+ }
+
+ .wrapper {
+  position: relative;
+  flex: 1 1 auto;
+}
+.scroll {
+  position: absolute;
+  top: 0; bottom: 0;
+  overflow-y: auto;
+  width: 100%;
+}

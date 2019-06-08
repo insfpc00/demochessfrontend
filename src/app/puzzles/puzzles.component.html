@@ -1,0 +1,66 @@
+<div>
+  <button type="button" class="btn btn-sm btn-link " (click)="filtersCollapsed = !filtersCollapsed">
+    {{filtersCollapsed?'Show filters':'Hide filters'}}
+  </button>
+
+  <div [ngbCollapse]="filtersCollapsed">
+    <form class="d-flex flex-row justify-content-between">
+
+      <select class="form-control" searchable="puzzle.category" (search)="onFilter($event)">
+        <option value="">Select category</option>
+        <option *ngFor="let category of categories" [value]="category">{{category}}</option>
+      </select>
+
+      <select class="form-control" searchable="puzzle.complexity" (search)="onFilter($event)">
+        <option value="">Select difficulty</option>
+        <option *ngFor="let difficulty of difficultyLevels" [value]="difficulty">{{difficulty}}</option>
+      </select>
+
+      <select class="form-control" searchable="ended" (search)="onFilter($event)">
+          <option value="">Select completed</option>
+          <option  value="true">Yes</option>
+          <option  value="false">No</option>
+        </select>
+    </form>
+
+
+
+  </div>
+  <table class="table table-dark table-striped table-hover mt-1">
+    <caption>Available puzzles</caption>
+    <thead class="thead-dark">
+      <th class="text-center">Description</th>
+      <th class="text-center">Category</th>
+      <th class="text-center">Difficulty</th>
+      <th class="text-center">Result</th>
+      <th class="text-center">Last attempt</th>
+    </thead>
+    <tbody>
+      <tr *ngFor="let puzzle of pagedPuzzles" class="selectable-row" (click)="onSelect(puzzle)">
+        <td class="text-center">{{puzzle.puzzle.description}}</td>
+        <td class="text-center">{{puzzle.puzzle.category}}</td>
+        <td class="text-center">{{puzzle.puzzle.complexity}}</td>
+        <td class="text-center" *ngIf="puzzle.ended">
+          <icon-wrapper [name]="'win'"></icon-wrapper>
+        </td>
+        <td class="text-center" *ngIf="!puzzle.ended">
+          <icon-wrapper *ngIf="puzzle.lastTry" [name]="'loss'"> </icon-wrapper>
+          <span *ngIf="!puzzle.lastTry">. . .</span>
+        </td>
+        <td class="text-center">{{(puzzle.lastTry |date:'dd/MM/yyyy HH:mm')}}</td>
+
+      </tr>
+    </tbody>
+  </table>
+  <div class="d-flex justify-content-between p-2">
+    <ngb-pagination [collectionSize]="filteredPuzzlesLength" [(page)]="page" [pageSize]="pageSize" [maxSize]="10">
+    </ngb-pagination>
+
+    <select class="custom-select" style="width: auto" [(ngModel)]="pageSize">
+      <option [ngValue]="5">5 items per page</option>
+      <option [ngValue]="10">10 items per page</option>
+      <option [ngValue]="50">50 items per page</option>
+    </select>
+  </div>
+
+  <router-outlet></router-outlet>

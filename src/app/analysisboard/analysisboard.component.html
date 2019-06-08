@@ -1,0 +1,65 @@
+<div class="d-flex flex-row mb-1">
+  <span  [class.invisible]="!analysisRequested"  class='alert alert-warning m-0 mr-auto d-flex align-items-center'>
+    <span class="spinner-border text-primary">
+    </span>
+    &nbsp;&nbsp;Analysis requested! It could take a few minutes to complete (the analysis will be attached to this match so you can review it later).
+  </span>
+</div>
+
+<div class="row">
+  <div class="col-7">
+    <app-chessboard #chessboard [(flippedBoard)]="flippedBoard" [match]="match$ | async" [pieces]="flattenPieces"
+      (animationEnd)="onAnimationEnd($event)" [fromMarkers]="fromMarkers" [toMarkers]="toMarkers"
+      [whiteDroppedPieces]="whiteDroppedPieces" [blackDroppedPieces]="blackDroppedPieces">
+    </app-chessboard>
+  </div>
+  <div class="col-5">
+    <div class="d-flex flex-column h-25 flex-grow-1 justify-content-center align-items-center border bg-light">
+      <div class="container border">
+      <h5 class="text-center"> Game analysis </h5>
+      </div>
+      <div class="m-auto">
+      <button *ngIf="!analysis" class="btn btn-lg btn-info" (click)="onAnalyse()"><span class="oi oi-graph"></span> Analyse game</button>
+      </div>
+      <div *ngIf="analysis " class="p-2 d-flex flex-grow-1 flex-column w-100 justify-content-center" >
+        <ngb-progressbar type="warning" [value]="analysis[currentMove] | score" [striped]="true" [animated]="true">
+          <i>{{(analysis[currentMove] | score) - 50| number:1.0-1}}</i></ngb-progressbar>
+        <h5 *ngIf="currentMove>0"> Current move: <span class="font-weight-bold">{{moves[currentMove-1].acn}}</span></h5>
+        <h5> Best move: <span class="font-weight-bold">{{analysis[currentMove].bestMove}}</span></h5>
+        <h5 *ngIf="analysis[currentMove].score"> Advantage <small class="font-weight-light">(in centipawns)</small>: <span class="font-weight-bold">{{analysis[currentMove].score}} </span></h5>
+        <h5 *ngIf="analysis[currentMove].mateInX">Mate in <span class="font-weight-bold">{{analysis[currentMove].mateInX}}</span></h5>
+      </div>
+    </div>
+
+    <div class="flex-grow-1 h-75 d-flex flex-column border">
+      <h4 *ngIf="currentMove >= 0" class="align-self-center">{{openings[currentMove]}}</h4>
+      <div class="wrapper">
+        <div class="scroll">
+          <div class="flex-grow-1 h-50 d-flex flex-column">
+            <table class="table table-bordered table-striped table-sm">
+              <caption>Moves</caption>
+              <tbody>
+                <tr *ngFor="let move of acnMoves, let i=index">
+                  <td  (click)="goTo(i*2)" [class.table-primary]="i === (currentMove-1)/2"
+                    [class.table-active]="i < (currentMove-1)/2 " class="text-center selectable-row w-50">{{move.white}}
+                  </td>
+                  <td   (click)="goTo(i*2+1)" [class.table-primary]="i === ((currentMove-2)/2) "
+                    [class.table-active]="i < ((currentMove-2)/2) " class="text-center selectable-row w-50">
+                    {{move.black}}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+      <div class="d-flex flex-row justify-content-center border">
+        <button class="btn oi oi-media-skip-backward" (click)="skipBack()"></button>
+        <button class="btn oi oi-media-step-backward" (click)="stepBack()"></button>
+        <button class="btn oi oi-media-stop" [class.disabled]='!playing' (click)="stop()"></button>
+        <button class="btn oi oi-media-play" [class.disabled]='playing' (click)="play()"></button>
+        <button class="btn oi oi-media-step-forward" (click)="stepForward()"></button>
+        <button class="btn oi oi-media-skip-forward" (click)="skipForward()"></button>
+      </div>
+    </div>
+  </div>
+</div>

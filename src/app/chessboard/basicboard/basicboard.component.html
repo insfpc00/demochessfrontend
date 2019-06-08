@@ -1,0 +1,32 @@
+<div #board id="board" style="width:100%"> <!-- class="w-100" -->
+  <img  src="../../assets/images/board.svg" class="invisible" resize (heightChange)="onHeightChange($event)">
+  <div *ngFor="let letter of ['a','b','c','d','e','f','g','h'] |reverse:flippedBoard; let i=index"
+    class="mr-1 position-absolute unselectable" [style.bottom]="'0%'" [style.right]="(7 -i)*12.5+'%'">
+    {{letter}}
+  </div>
+  <div *ngFor="let number of ['1','2','3','4','5','6','7','8'] |reverse:flippedBoard; let i=index"
+    class="ml-1 position-absolute unselectable" [style.top]="(7  -i)*12.5+'%'" [style.left]="'0%'">
+    {{number}}
+  </div>
+  <div *ngFor="let piece of pieces">
+    <div *ngIf="piece!=null && piece.isDraggable"
+      [class]="'piece ' + (piece.color| lowercase) +'-'+ (piece.type |lowercase)" [style.left]="(piece.beingDragged? piece.screen.x +'px': (piece.position | flip:flippedBoard ).x*12.5+'%')"
+      [style.top]="(piece.beingDragged? piece.screen.y +'px' : (piece.position | flip:flippedBoard ).y*12.5+'%') " appDraggable (dragStart)="onDragStart($event,piece)"
+      (dragEnd)="onDragEnd($event,piece)" (dragMove)="onDragMove($event,piece)"
+      [class.being-dragged]='piece.beingDragged'>
+    </div>
+    <div *ngIf="piece!=null && !piece.isDraggable"
+      [@changePositionTrigger]="{value: piece.animationState, params:{leftValue: (piece.position | flip:flippedBoard ).x*12.5+'%', topValue: (piece.position | flip:flippedBoard ).y*12.5+'%'}}"
+      [class]="'piece ' + (piece.color| lowercase) +'-'+(piece.type |lowercase)"
+      (@changePositionTrigger.done)="onAnimationEnd(piece)">
+    </div>
+  </div>
+  <div *ngFor="let marker of markers" [class]="'circle-marker'" [style.left]="marker.x*12.5+'%'"
+    [style.top]="marker.y*12.5+'%'"></div>
+  <div *ngFor="let marker of fromMarkers" [class]="'square-marker-from'"
+    [style.left]="(marker | flip:flippedBoard).x*12.5+'%'" [style.top]="(marker | flip:flippedBoard).y*12.5+'%'">
+  </div>
+  <div *ngFor="let marker of toMarkers" [class]="'square-marker-to'"
+    [style.left]="(marker | flip:flippedBoard).x*12.5+'%'" [style.top]="(marker | flip:flippedBoard).y*12.5+'%'">
+  </div>
+</div>

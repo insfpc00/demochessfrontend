@@ -1,0 +1,8 @@
+<div mat-dialog-content>
+
+  <div  [class]="'piece-medium ' + (this.data.isWhite?'white':'black')+'-queen'" (click)="selectPiece('QUEEN')"></div>
+  <div  [class]="'piece-medium ' + (this.data.isWhite?'white':'black')+'-rook'" (click)="selectPiece('ROOK')"></div>
+  <div  [class]="'piece-medium ' + (this.data.isWhite?'white':'black')+'-bishop'" (click)="selectPiece('BISHOP')"></div>
+  <div  [class]="'piece-medium ' + (this.data.isWhite?'white':'black')+'-horse'"(click)="selectPiece('HORSE')"></div>
+
+</div>

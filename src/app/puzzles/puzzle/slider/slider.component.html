@@ -1,0 +1,7 @@
+<div class="d-flex flex-row">
+  <button class="btn oi oi-arrow-left" [disabled]="!data || data.length < 2" (click)="prev()"></button>
+  <div class="alert-primary text-center m-0 flex-grow-1" [class.invisible]="!data || data.length === 0">
+    {{data[position]}}
+  </div>
+  <button class="btn oi oi-arrow-right" [disabled]="!data || data.length < 2" (click)="next()"></button>
+</div>

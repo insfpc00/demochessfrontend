@@ -1,0 +1,107 @@
+<div class="container mt-4"></div>
+<app-usercard *ngIf="userDto" [ratingType]="'all'" [user]="userDto"></app-usercard>
+<app-stats></app-stats>
+
+<button type="button" class="btn btn-sm btn-link " (click)="filtersCollapsed = !filtersCollapsed">
+  {{filtersCollapsed?'(+) Search options':'(-) Hide search options'}}
+</button>
+<div [ngbCollapse]="filtersCollapsed">
+  <form (ngSubmit)="search()" class="bg-light border pl-3 pr-3 pt-1 pb-1">
+    <div class="d-flex flex-row align-items-start justify-content-between">
+      <div class="form-group">
+        <label for="opponent">Opponent:</label>
+        <input type="text" searchable="oponent" class="form-control" placeholder="opponent..." name="opponent"
+          [(ngModel)]="searchForm.opponent" />
+      </div>
+      <div class="d-flex flex-column form-group">
+          <label for="color">Color:</label>
+          <div><input type="checkbox" value="WHITE" name="white" [(ngModel)]="searchForm.white"> White</div>
+          <div><input type="checkbox" value="BLACK" name="black" [(ngModel)]="searchForm.black"> Black</div>
+        </div>
+      <div class="d-flex flex-column form-group">
+        <label for="timecontrol">Time control:</label>
+        <div><input type="checkbox" value="BULLET" name="bullet" [(ngModel)]="searchForm.bullet"> Bullet</div>
+        <div><input type="checkbox" value="BLITZ" name="blitz" [(ngModel)]="searchForm.blitz"> Blitz</div>
+        <div><input type="checkbox" value="RAPID" name="rapid" [(ngModel)]="searchForm.rapid"> Rapid</div>
+      </div>
+      <div>
+        <div class="form-group">
+          <label for="since">Since:</label>
+          <div class="input-group">
+            <input class="form-control" placeholder="yyyy-mm-dd" name="since" [(ngModel)]="searchForm.since"
+              ngbDatepicker #d1="ngbDatepicker" #c1="ngModel" (dateSelect)="this.searchForm.sinceChanged=true">
+            <div class="input-group-append">
+              <button class="btn btn-outline-secondary oi oi-calendar" (click)="d1.toggle()" type="button"></button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div>
+        <div class="form-group">
+          <label for="until">Until:</label>
+          <div class="input-group">
+            <input class="form-control" placeholder="yyyy-mm-dd" name="until" [(ngModel)]="searchForm.until"
+              ngbDatepicker #d2="ngbDatepicker" #c2="ngModel" (dateSelect)="this.searchForm.untilChanged=true">
+            <div class="input-group-append">
+              <button class="btn btn-outline-secondary oi oi-calendar" (click)="d2.toggle()" type="button"></button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="form-group">
+          <label for="matchresult">Result:</label>
+          <div><input type="checkbox" value="WIN" name="win" [(ngModel)]="searchForm.win"> Win</div>
+          <div><input type="checkbox" value="LOSS" name="loss" [(ngModel)]="searchForm.loss"> Loss</div>
+          <div><input type="checkbox" value="DRAW" name="draw" [(ngModel)]="searchForm.draw"> Draw</div>
+      </div>
+    </div>
+    <div class="d-flex flex-row">
+    <button class="btn btn-info oi oi-magnifying-glass" title="Search">
+    </button>
+    <button class="btn btn-secondary oi oi-x ml-1" title="Clear" (click)="clearSearchForm()">
+    </button>
+    </div>
+  </form>
+</div>
+
+<table class="table table-dark table-striped table-hover mt-3">
+  <caption>Matches played</caption>
+  <thead class="thead-dark">
+    <th class="text-center">Color</th>
+    <th class="text-center">Date</th>
+    <th class="text-center">Opponent</th>
+    <th class="text-center">Time control</th>
+    <th class="text-center">Type</th>
+    <th class="text-center">Result</th>
+  </thead>
+  <tbody>
+    <tr *ngFor="let match of matches" (click)="onSelectMatch(match.matchId)" class="selectable-row">
+      <!--| slice:(page-1)*pageSize:page*pageSize-->
+      <td class="text-center"><span
+          [innerHTML]="(userService.loggedUser===match.whitePiecesUser.username?'white':'black') | matchColor"
+          [ngbTooltip]="userService.loggedUser===match.whitePiecesUser.username?'White':'Black'"></span></td>
+      <td class="text-center">{{match.creationDate | date:'dd/MM/yyyy HH:mm'}} </td>
+      <td class="text-center">
+        {{(userService.loggedUser===match.whitePiecesUser.username)? match.blackPiecesUser.username:match.whitePiecesUser.username}}
+      </td>
+      <td class="text-center">{{match | timeControl}}</td>
+      <td class="text-center">
+        <icon-wrapper [name]="match | timeControlType"></icon-wrapper>
+      </td>
+      <td class="text-center">
+        <icon-wrapper [name]="match | result:userService.loggedUser"></icon-wrapper>
+      </td>
+    </tr>
+
+  </tbody>
+</table>
+<div class="d-flex justify-content-between p-2">
+  <ngb-pagination [collectionSize]="this.searchCount" [(page)]="page" [pageSize]="pageSize">
+  </ngb-pagination>
+
+  <select class="custom-select" style="width: auto" [(ngModel)]="pageSize">
+    <option [ngValue]="5">5 items per page</option>
+    <option [ngValue]="10">10 items per page</option>
+    <option [ngValue]="50">50 items per page</option>
+  </select>
+</div>

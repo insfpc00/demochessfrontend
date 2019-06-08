@@ -1,0 +1,29 @@
+<div class="d-flex flex-column h-100 border">
+  <div class="d-flex flex-row justify-content-between border">
+    <button class="btn oi oi-power-standby btn-sm" (click)="toggleEnabled()" [class.btn-outline-primary]="enabled"
+      [class.btn-outline-secondary]="!enabled"></button>
+    <h5 class="text-center mt-1 mb-0" [class.text-muted]="!enabled" [class.font-weight-light]="!enabled">Chat
+      {{enabled?'':' (disabled)'}}</h5>
+    <div class="invisible btn oi oi-power-standby btn-sm"></div>
+  </div>
+  <div class="h-100 bg-light h-100">
+    <div class="p-2 table-responsive h-75">
+      <table class="table table-sm">
+        <tbody>
+          <tr class="message" *ngFor="let message of receivedMessages" [class.text-muted]="!enabled">
+            <span [class.text-secondary]="message.from===this.me" [class.text-primary]="message.from!==this.me"
+              class="font-weight-bold">{{message.from}}:&nbsp;</span>
+            {{message.message}}
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <form class="form mt-auto">
+    <div class="form-group mb-0">
+      <input [ngModelOptions]="{standalone: true}" [(ngModel)]="message" (keyup.enter)="onSendMessage()"
+        placeholder="New message ..." class="form-control" [disabled]="!enabled" />
+    </div>
+  </form>
+</div>

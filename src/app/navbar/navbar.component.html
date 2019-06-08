@@ -1,0 +1,47 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <a class="navbar-brand" href="#"><img [src]="'./assets/images/logo.svg'" style="width:2em;height:2em">
+    ngChess</a>
+  <ul class="navbar-nav mr-auto">
+    <li class="nav-item" *ngIf="this.userService.isAuthenticated()">
+      <a class="nav-link" routerLink="/home" routerLinkActive="active"> <span class="oi oi-home"></span>&nbsp;Home</a>
+    </li>
+    <li class="nav-item" *ngIf="this.userService.isAuthenticated()" >
+      <a class="nav-link" routerLink="/challenges" routerLinkActive="active">&#9876; &nbsp;Challenges</a>
+    </li>
+    <li class="nav-item" *ngIf="this.userService.isAuthenticated() && router.isActive('/analysisboard',false)" >
+      <span class="nav-link" routerLink="/analysisboard" routerLinkActive="active">&#9817; Analysis Board</span>
+    </li>
+    <li class="nav-item" *ngIf="this.userService.isAuthenticated()" >
+      <a class="nav-link" routerLink="/puzzles" routerLinkActive="active"><span class="oi oi-puzzle-piece"></span> Puzzles</a>
+    </li>
+  </ul>
+  <ul class="navbar-nav d-flex justify-content-end" *ngIf="!this.userService.isAuthenticated()">
+      <li class="nav-item d-flex justify-content-end" >
+        <a routerLink="/login" routerLinkActive="active">
+          <span class="nav-link oi oi-account-login" title="Sign in" > Sign in</span>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a routerLink="/signup" routerLinkActive="active">
+          <span class="nav-link oi oi-clipboard" title="Sign up" > Sign up</span>
+        </a>
+      </li>
+  </ul>
+  <ul class="navbar-nav d-flex justify-content-end" *ngIf="this.userService.isAuthenticated()">
+
+      <li class="nav-item d-flex">
+
+        <a routerLink="/account" routerLinkActive="active" class="nav-link">
+          <span>
+              {{userService.loggedUser}}
+          </span>
+          <span class="oi oi-person" title="Account"> </span>
+        </a>
+      </li>
+      <li class="nav-item d-flex justify-content-end" >
+        <a >
+          <span class="nav-link oi oi-account-logout" style="cursor: pointer;" title="Logout" (click)="logout()">&nbsp;Logout</span>
+        </a>
+      </li>
+  </ul>
+</nav>

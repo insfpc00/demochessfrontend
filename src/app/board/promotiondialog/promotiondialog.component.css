@@ -1,0 +1,8 @@
+.piece-medium{
+  background-size: 75px 75px !important;
+  background-repeat: no-repeat !important;
+  height: 75px !important;
+  width: 75px !important;
+  display:inline-block;
+  cursor: pointer;
+}

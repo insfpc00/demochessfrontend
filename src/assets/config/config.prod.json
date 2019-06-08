@@ -1,0 +1,9 @@
+{
+  "env": {
+  "name": "PROD"
+   },
+   "apiServer": {
+    "baseUrl": "https://demochessbackend.herokuapp.com",
+    "socketURL":"ws://demochessbackend.herokuapp.com/websocket/websocket"
+  }
+}

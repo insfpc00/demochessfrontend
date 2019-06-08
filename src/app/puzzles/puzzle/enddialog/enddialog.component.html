@@ -1,0 +1,12 @@
+<div class="container border pt-2 pb-2 text-center">
+  <h1>
+    <span *ngIf="data===0"> <img src="../../../assets/images/game/victory.svg" class="puzzle-result-icon"><p>Well done!</p></span>
+    <span *ngIf="data > 0"> <img src="../../../assets/images/game/defeat.svg" class="puzzle-result-icon"><p>Try again!</p></span>
+  </h1>
+  <span class="font-italic">{{this.label}}</span>
+
+<div class="d-flex justify-content-center mt-1">
+  <button class="btn btn-primary m-1" (click)="goTo('/home')"> <span class="oi oi-home"></span>&nbsp;Home</button>
+  <button class="btn btn-primary m-1" (click)="goTo('/puzzles')"><span class="oi oi-puzzle-piece"></span> &nbsp;Puzzles</button>
+  <button *ngIf="data > 0" class="btn btn-primary m-1" (click)="goTo('')"><span class="oi oi-action-redo"></span> &nbsp;Retry</button>
+</div>

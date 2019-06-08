@@ -1,0 +1,57 @@
+<div class="d-flex flex-row mb-1">
+  <span *ngIf="userDisconnected" class='d-flex flex-row alert alert-danger m-0 p-3'>
+    <span class="font-weight-bold">{{(match|matchuser:!board.iamWhitePieces).username}}</span>
+    &nbsp; disconnected! Waiting {{secondsLeftAfterLoss}} seconds to reconnect!
+  </span>
+  <div class="d-flex flex-row border bg-light p-1" *ngIf="drawOffered">
+    <span class='alert alert-info m-0'>
+      <span class="font-weight-bold">{{(match|matchuser:!board.iamWhitePieces).username}}</span>
+      offers a draw!
+    </span>
+    <button (click)="acceptDraw()" class="btn btn-primary m-1">Accept</button>
+    <button (click)="drawOffered=false" class="btn btn-secondary m-1">Decline</button>
+  </div>
+  <span *ngIf="offeringDraw" class='alert alert-info m-0 p-3 d-flex'>
+    Draw offered!
+  </span>
+  <div class="d-flex flex-row ml-auto">
+    <div class="border bg-light p-1">
+      <button (click)="resign()" class="btn btn-primary m-1">Resign</button>
+      <button (click)="offerDraw()" class="btn btn-secondary m-1" [class.disables]='offeringDraw'>Offer a
+        draw</button>
+    </div>
+  </div>
+
+</div>
+<div class="row">
+  <div class="col-3 d-flex flex-column justify-content-center">
+    <div class="flex-grow-1 h-50">
+      <app-chat *ngIf="match$ | async" [me]="(match| matchuser:board.iamWhitePieces).username"
+        [username]="(match| matchuser:!board.iamWhitePieces).username" [enabled]="chatEnabled"
+        (enabledChange)="setChatEnabled($event)"></app-chat>
+    </div>
+    <div class="flex-grow-1 h-50 d-flex flex-column">
+      <p class="text-center font-weight-bold mb-1"> Moves </p>
+      <div class="wrapper">
+        <div class="scroll">
+          <table class="table table-bordered table-striped table-sm">
+            <tbody>
+              <tr *ngFor="let move of board.movesInACN, let first=first">
+                <td class="text-center" [class.table-active]="first">{{move.split(" ")[0]}}</td>
+                <td class="text-center" *ngIf="move.split(' ').length > 1" [class.table-active]="first">
+                  {{move.split(" ")[1]}}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-9">
+    <app-chessboard #chessboard [(flippedBoard)]="flippedBoard" [match]="match$ | async"
+      (dragEnd)="onDragEnd($event.pointerEvent,$event.draggedPiece)" [pieces]="board.flattenPieces"
+      [fromMarkers]="board.fromMarkers" [toMarkers]="board.toMarkers" [whiteDroppedPieces]="board.whiteDroppedPieces"
+      [blackDroppedPieces]="board.blackDroppedPieces" (animationEnd)="board.onAnimationEnd($event)">
+    </app-chessboard>
+  </div>
+</div>

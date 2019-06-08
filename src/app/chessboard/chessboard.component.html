@@ -1,0 +1,16 @@
+  <div mwlResizable class="container d-flex" [class.flex-column-reverse]="flippedBoard"
+    [class.flex-column]="!flippedBoard">
+
+    <app-playerpanel #blacksPanel [match]="match" [droppedPieces]="whiteDroppedPieces" [flipped]="flippedBoard"
+      [showWhite]="false" [pieces]="pieces">
+    </app-playerpanel>
+
+    <app-basicboard #board [pieces]="pieces" [toMarkers]="toMarkers" [fromMarkers]="fromMarkers" [flippedBoard]="flippedBoard"></app-basicboard>
+
+    <app-playerpanel #whitesPanel [match]="match" [droppedPieces]="blackDroppedPieces" [flipped]="!flippedBoard"
+      [showWhite]="true" [pieces]="pieces">
+    </app-playerpanel>
+    <button (click)="switchSides()"
+      class="oi oi-loop-circular btn btn-secondary position-absolute d-flex ml-auto mb-auto" data-toggle="tooltip"
+      data-placement="bottom" title="Switch sides" style="top:0%;right:2%"></button>
+  </div>

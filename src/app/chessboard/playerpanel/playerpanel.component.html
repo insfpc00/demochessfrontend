@@ -1,0 +1,18 @@
+<div *ngIf="match" class="container mx-auto m-0 p-0">
+  <div class="row">
+    <div class="col-8">
+      <app-usercard [user]="showWhite?match.whitePiecesUser:match.blackPiecesUser" [ratingType]="match | timeControlType"></app-usercard>
+    </div>
+    <div class="d-flex pl-0 col-4 align-items-end" [class.flex-column-reverse]="!flipped"
+      [class.flex-column]="flipped">
+      <app-clock #clock [class.align-baseline]="flipped" [remainingTime]="match.timeInSeconds*1000"
+        [increment]="match.timeIncrementInSeconds*1000"></app-clock>
+      <div class="d-flex flex-wrap-reverse">
+        <span>{{ pieces | advantage:showWhite:pieces.length }}</span>
+        <div *ngFor="let piece of droppedPieces; index as i"
+          [class]="'piece-small ' + (piece.color| lowercase) +'-'+ (piece.type |lowercase)">
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

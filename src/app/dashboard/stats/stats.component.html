@@ -1,0 +1,39 @@
+<div>
+
+  <div class="d-inline-flex align-items-center">
+    <label for="last" class="col-form-label mr-1">Show last</label>
+    <select id="last" name="last" class="form-control-sm mr-2" [(ngModel)]="options.last" (change)="refreshCharts()">
+      <option value="7">7</option>
+      <option value="10">10</option>
+      <option value="20">20</option>
+    </select>
+    <label for="groupBy" class="col-form-label mr-1">Grouped By</label>
+    <select id="groupBy" name="groupBy" class="form-control-sm" [(ngModel)]="options.groupBy"
+      (change)="refreshCharts()">
+      <option value="DAY">Day</option>
+      <option value="WEEK">Week</option>
+      <option value="MONTH">Month</option>
+      <option value="YEAR">Year</option>
+    </select>
+  </div>
+  <div class="container p-0">
+    <div class="row">
+      <div class="col-6">
+        <canvas id="matchHistoryChart"></canvas>
+        <div class="row ml-3">
+          <div class='btn btn-sm' [ngClass]="{'btn-secondary': selectedMatchType==='rapid','btn-light': selectedMatchType!=='rapid'}"  (click)="showStats('rapid')">Rapid</div>
+          <div class="btn btn-sm btn-light" [ngClass]="{'btn-secondary': selectedMatchType==='blitz','btn-light': selectedMatchType!=='blitz'}" (click)="showStats('blitz')">Blitz</div>
+          <div class="btn btn-sm btn-light" [ngClass]="{'btn-secondary': selectedMatchType==='bullet','btn-light': selectedMatchType!=='bullet'}" (click)="showStats('bullet')">Bullet</div>
+        </div>
+      </div>
+      <div class="col-6">
+        <canvas id="overallMatchHistoryChart"></canvas>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col" style="height:25em;">
+        <canvas id="lineChart"></canvas>
+      </div>
+    </div>
+  </div>
+</div>

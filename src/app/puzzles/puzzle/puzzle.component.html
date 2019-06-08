@@ -1,0 +1,35 @@
+<div class="d-flex flex-column align-items-center ">
+  <div class="d-flex flex-row w-100 justify-content-center">
+    <h2 class="position-absolute">{{puzzle.description}}</h2>
+    <button class="btn btn-primary oi oi-x ml-auto" title="Cancel" (click)="goBack()"></button>
+  </div>
+  <div #puzzleBoard class="container d-flex flex-column m-2 border p-2" autofocus>
+    <div class="d-flex flex-row">
+      <div class="d-flex flex-row justify-content-center w-50 bg-light">
+        <app-clock *ngIf="puzzle"  #clock (noRemainingTime)="timeRanOut()" [remainingTime]="puzzle.secondsAvailable*1000" [increment]="0"></app-clock>
+      </div>
+      <span class="alert alert-info text-center w-50 m-0" *ngIf="puzzle"> <span class="font-weight-bold">Errors: </span>
+        {{this.wrongMoves}} /
+        {{this.puzzle.numberOfWrongMovesAllowed}}</span>
+    </div>
+    <span *ngIf="goodMove === null" class="alert alert-light text-center mt-1 mb-0"
+      [class.invisible]="goodMove !==null"> No moves played </span>
+    <span *ngIf="!goodMove && goodMove!==null" class="alert alert-danger text-center mt-1 mb-0"
+      [class.invisible]="goodMove || goodMove===null">
+      Bad
+      move! </span>
+    <span *ngIf="goodMove" class="alert alert-success text-center mt-1 mb-0"
+      [class.invisible]="!goodMove || goodMove===null">
+      Good move! </span>
+    <div class="d-flex flex-row mt-1">
+      <button [disabled]="!tipsAvailable" class="btn btn-primary oi oi-info" (click)="showTip();"
+        title="Show tip"></button>
+      <app-slider #slider *ngIf="puzzle" #slider class="flex-grow-1" [data]="tipsShowed"></app-slider>
+    </div>
+  </div>
+
+  <app-basicboard #puzzleboard [pieces]="board.flattenPieces" [toMarkers]="board.toMarkers"
+    [fromMarkers]="board.fromMarkers" [flippedBoard]="!board.iamWhitePieces"
+    (dragEnd)="onDragEnd($event.pointerEvent,$event.draggedPiece)"></app-basicboard>
+
+</div>

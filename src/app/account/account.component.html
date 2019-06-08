@@ -1,0 +1,126 @@
+  <form (ngSubmit)="onSubmitChangePassword()" #changePasswordForm="ngForm" class="mb-3">
+    <legend>Change your password</legend>
+    <div class="row">
+      <div class="col-6">
+        <div class="form-group">
+          <label for="oldpassword">Old password:</label>
+          <input type="password" id="oldpassword" class="form-control" [(ngModel)]="changePasswordData.oldPassword"
+            name="oldpassword" #oldpassword="ngModel" autocomplete="off" required />
+        </div>
+      </div>
+    </div>
+    <div class="col">
+      <div class="row">
+        <div class="col-6 pl-0">
+          <div class="form-group">
+            <label for="newpassword">New password:</label>
+            <input type="password" id="password" class="form-control" [(ngModel)]="changePasswordData.newPassword"
+              name="newpassword" #password="ngModel" autocomplete="off" required />
+          </div>
+        </div>
+        <div class="col-6 pr-0">
+          <div class="form-group">
+            <label for="repeatedpassword">Repeat new password:</label>
+            <input type="password" id="repeatedpassword" #repeatedpassword="ngModel" [(ngModel)]="repeatedPassword"
+              class="form-control" name="repeatedpassword" autocomplete="off" required />
+          </div>
+        </div>
+
+      </div>
+    </div>
+    <div [hidden]="password.valid || password.pristine" class="alert alert-danger">
+      New password must be not empty!
+    </div>
+    <div [hidden]="oldpassword.valid || oldpassword.pristine" class="alert alert-danger">
+      Old password must be not empty!
+    </div>
+    <div [hidden]="!differentPasswords" class="alert alert-danger">
+      Password and repeated password must be equal!
+    </div>
+    <div [hidden]="!this.passwordChanged" class="alert alert-success">
+      Password changed!
+    </div>
+    <button class="btn btn-primary" [disabled]="!changePasswordForm.form.valid">
+      Change
+    </button>
+  </form>
+
+
+
+  <form (ngSubmit)="onUserUpdateSubmit()" #editForm="ngForm" class="mb-3">
+    <legend>Edit user profile and preferences</legend>
+    <div class="row">
+      <div class="col-6">
+        <div class="form-group">
+          <label for="Theme">Theme: </label>
+          <select [(ngModel)]="updateUserData.theme" id="theme" name="theme" class="form-control">
+            <option *ngFor="let theme of themes" [value]="theme">{{theme.toUpperCase()}}</option>
+          </select>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-6">
+        <div class="form-group">
+          <label for="FideTitle">Change your FIDE title: </label>
+          <select [(ngModel)]="updateUserData.title" id="title" name="title" class="form-control">
+            <option value="">None</option>
+            <option *ngFor="let fideTitle of fideTitles" [value]="fideTitle">{{fideTitle}}</option>
+          </select>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
+        <div class="form-group">
+          <label for="Country">Change your country</label>
+          <select [(ngModel)]="updateUserData.country" id="country" name="country" class="form-control">
+            <option value="">None</option>
+            <option *ngFor="let country of countries" [value]="country">{{country}}</option>
+          </select>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
+        <div class="form-group">
+          <label for="Sound">Sound enabled:&nbsp;</label>
+            <input type="radio"  name="withsound" id="withsound" [(ngModel)]="updateUserData.soundEnabled" [value]="true"/>Yes
+            <input type="radio" name="withoutsound" id="withoutsound" [(ngModel)]="updateUserData.soundEnabled" [value]="false"/>No
+
+        </div>
+      </div>
+    </div>
+    <div [hidden]="!this.userUpdated" class="alert alert-success">
+      User updated!
+    </div>
+    <button class="btn btn-primary" [disabled]="!editForm.form.valid">
+      Update
+    </button>
+    <!-- <div *ngIf="invalidLogin" class="error">
+        <div>Invalid credentials.</div>
+      </div> -->
+  </form>
+  <form>
+    <legend>Change your avatar</legend>
+
+    <div class="row">
+      <div class="col-3">
+          <img [src]="avatarBlob?avatarBlob:'assets/images/avatar.png'" class="img-fluid border border-secondary">
+      </div>
+    </div>
+    <div class="row">
+        <div class="col-6">
+          <div class="form-group">
+            <label for="avatar">Change your avatar:</label>
+            <input type="file" #file class="form-control-file" name="avatar" (change)="onFileChange($event)" />
+          </div>
+        </div>
+      </div>
+    <div [hidden]="!this.avatarUploaded" class="alert alert-success">
+          New avatar uploaded!
+    </div>
+    <button class="btn btn-primary" [disabled]="!this.avatarfile" (click)="uploadAvatar()">
+      Upload
+    </button>
+  </form>
