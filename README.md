@@ -2,8 +2,6 @@
 
 Frontend project in Angular 7 for a chess web application.
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 7.3.5.
-
 The master of this repository is currently deployed on Heroku and available at https://demochess.herokuapp.com (you can use preloaded accounts demo/demo or demo2/demo2). _**Note**: The first load could take a couple of minutes (since the server could be sleeping)_.
 
 # Features
