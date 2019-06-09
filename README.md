@@ -31,7 +31,7 @@ Most important libraries used:
 
 Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
 
-_**Note:** You will need to change in 'src/assets/config/config.dev.json' the URL of the backend spring-boot server with your correct one._
+_**Note:** You will need to change in `src/assets/config/config.dev.json` the URL of the backend spring-boot server with your correct one._
 
 ## Build
 
