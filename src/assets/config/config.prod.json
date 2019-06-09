@@ -4,6 +4,6 @@
    },
    "apiServer": {
     "baseUrl": "https://demochessbackend.herokuapp.com",
-    "socketURL":"ws://demochessbackend.herokuapp.com/websocket/websocket"
+    "socketURL":"wss://demochessbackend.herokuapp.com/websocket/websocket"
   }
 }
